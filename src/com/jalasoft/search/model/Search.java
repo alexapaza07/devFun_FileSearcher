@@ -11,6 +11,9 @@
  */
 package com.jalasoft.search.model;
 import  java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * Class to search file or files in base to some criteria
@@ -19,36 +22,60 @@ import  java.io.File;
  */
 public class Search {
     private String path;
-    public Search(String path){
-        this.path = path;
-        listFileByPath(this.path);
+    private List<Asset> myList;
+    private Criteria criteria;
+    public Search(Criteria criteria){
+        this.path = criteria.getPath();
+        this.criteria = criteria;
+        myList = new ArrayList<Asset>();
     }
-    // For Testing purpose
-    public void listFileByPath(String path){
+    public List<Asset> getResult(){
+        searchFiles();
+        return  myList;
+    }
+
+    private void searchFiles() {
         File folder = new File(path);
         File[] files = folder.listFiles();
         for (File fil: files){
-            if (fil.isDirectory()){
-                listFileByPath(fil.getAbsolutePath());
+            Asset assetToAddress = new Asset(fil.getAbsolutePath());
+            if (assetToAddress.isDirectory()){
+                path = fil.getAbsolutePath();
+                searchFiles();
             }else{
-                System.out.println(fil.getName());
+                 searchForCriteria(assetToAddress,criteria.getTypeOfCriteria(), criteria.getTextToFind());
             }
         }
     }
+    private void searchForCriteria(Asset assetToAddress,String typeOfCriteria,String textToFind){
+
+         switch (typeOfCriteria) {
+            case "FILENAME": if(assetToAddress.getName().equals(typeOfCriteria)) {
+                                 myList.add(assetToAddress);
+                             }break;
+            case "OWNER": if(assetToAddress.getName().contains(typeOfCriteria)) {
+                                 myList.add(assetToAddress);
+                              }break;
+            case "CREATIONDATE": if(assetToAddress.getName().contains(typeOfCriteria)) {
+                                    myList.add(assetToAddress);
+                                    }break;
+            case "LASTMODIFYDATE": if(assetToAddress.getName().contains(typeOfCriteria)) {
+                                    myList.add(assetToAddress);
+                                    }break;
+            case "LASTACCESSDATE": if(assetToAddress.getName().contains(typeOfCriteria)) {
+                                    myList.add(assetToAddress);
+                                    }break;
+            default:break;
+        }
+
+    }
     //
-    public void listFileByPathWithCriteria(String path,String criteria){
-        Asset asset = new com.jalasoft.search.model.File(path);
-        if(asset.getName().equals("")){
-            System.out.println("There is no any file with that criteria");
-        }else{
-            System.out.println("File URL Path:"+asset.fileUri);
-            System.out.println("File name:"+asset.getName());
-            System.out.println("File path:"+asset.getName());
-            System.out.println("File mDate:"+asset.getName());
-            System.out.println("File cDate:"+asset.getName());
-            System.out.println("File lastAccessDate:"+asset.getName());
-            System.out.println("File owner:"+asset.getName());
-            System.out.println("File type:"+asset.getName());
+    public static void main(String arg[]){
+        Search search = new Search(new Criteria("C:\\testFolder","file","FILENAME" ) );
+        List<Asset> files = search.getResult();
+        for(Asset  fil : files) {
+            System.out.println(fil.getName());
         }
     }
+
 }

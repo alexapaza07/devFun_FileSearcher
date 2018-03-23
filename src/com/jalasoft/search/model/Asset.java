@@ -49,6 +49,13 @@ public class Asset {
     public  Asset(){
     }
     /**
+     * class constructor  without file URL
+     */
+    public boolean isDirectory(){
+        File file = new File(fileUri);
+        return  file.isDirectory();
+    }
+    /**
      * set the file name from file URL
      */
     public  void settName(){
