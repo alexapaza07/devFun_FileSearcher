@@ -18,34 +18,34 @@ package com.jalasoft.search.view;
  * @version  0.1 in progress
  * @author Harry Grajeda  ////
  */
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Window extends JFrame {
+private class Window extends JFrame {
 
     private JLabel searchLabel;
     private JButton searchButton;
-    private DrwaingPanel drawPanel;
-
-
-    drawPanel = new DrawingPanel();
-
+    private TextField resultText;
+    
     searchLabel = new JLabel("Search by File Name");
 
     public Window(String title){
         super(tittle);
-
-
+        setLayout( new BorderLayout(5,10));
+        add(new JLabel("Simple Search:"), BorderLayout.NORTH);
+        add(new JButton("Search"), BorderLayout.EAST):
+        add(new TextField(), BorderLayout.SOUTH);
 
     }
 
-    public static void main(String[] args) {
+    private static void main(String[] args) {
         JFrame window = new Window("Search File ver. 0.1");
-
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(640, 480);
         window.setVisible(true);
     }
-
-
-
-
 }
+
