@@ -1,4 +1,3 @@
-package com.jalasoft.search.view;
 
 /*
  * Window.java
@@ -15,37 +14,80 @@ package com.jalasoft.search.view;
  *
  Class description goes here.
  *
- * @version  0.1 in progress
+ * @version  0.2 in progress
  * @author Harry Grajeda  ////
  */
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
 
-private class Window extends JFrame {
+//create window (Jframe)
 
-    private JLabel searchLabel;
-    private JButton searchButton;
-    private TextField resultText;
-    
-    searchLabel = new JLabel("Search by File Name");
+class window extends JFrame{
 
-    public Window(String title){
-        super(tittle);
-        setLayout( new BorderLayout(5,10));
-        add(new JLabel("Simple Search:"), BorderLayout.NORTH);
-        add(new JButton("Search"), BorderLayout.EAST):
-        add(new TextField(), BorderLayout.SOUTH);
+// Insert the texts (Jtextfield), the button (Jbutton) and the Jpanel.
 
+    JTextField textSearch;
+    JLabel searchLabel;
+    JButton buttonSearch;
+    JPanel contentpane;
+
+    public window() {
+
+        //we make the window visible (Jframe) and give it coordinates where it appears
+
+        setBounds(100, 100, 640, 480);
+
+        setVisible(true);
+
+        //Insert the panel (content panel) and give it background color
+
+        contentpane = new JPanel();
+
+        contentpane.setBackground(Color.lightGray); //you can change the color here
+
+        setContentPane(contentpane);
+
+        contentpane.setLayout(null);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //Assing Text
+
+        textSearch = new JTextField();
+
+        //Assing Label
+        searchLabel = new JLabel();
+
+        //Assing Button
+        buttonSearch = new JButton();
+
+        //insert the texts, we give them coordinates and a text
+
+        textSearch.setBounds(250, 10, 160, 25);
+
+        contentpane.add(textSearch);
+
+        textSearch.setText("");
+
+        searchLabel.setBounds(50,10, 150, 25);
+        contentpane.add(searchLabel);
+        searchLabel.setText("Search by file name");
+
+
+        //insert the button, coordinates and a text
+
+        buttonSearch.setBounds(250, 150, 160, 25);
+
+        contentpane.add(buttonSearch);
+
+        buttonSearch.setText("Search");
+    }
+    public static void main(String args[]){
+
+        //insert window
+
+        window v = new window();
     }
 
-    private static void main(String[] args) {
-        JFrame window = new Window("Search File ver. 0.1");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(640, 480);
-        window.setVisible(true);
-    }
 }
 
