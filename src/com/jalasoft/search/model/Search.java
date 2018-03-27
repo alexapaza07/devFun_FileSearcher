@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  *
- * Class to search file or files in base to some criteria
+ * Class to search files given a list of criterias and path
  * @version  1.0
  * @author Alexander Apaza
  */
@@ -29,11 +29,16 @@ public class Search {
         this.listCriteria = listCriteria;
         myList = new ArrayList<MFile>();
     }
+    /**
+     * main method that is called to get the results about searching files
+     */
     public List<MFile> getResult() {
         searchFiles();
         return  myList;
     }
-
+    /**
+     * Internal method list all the files found in path specified
+     */
     private void searchFiles() {
         File folder = new File(path);
         File[] files = folder.listFiles();
@@ -47,6 +52,9 @@ public class Search {
             }
         }
     }
+    /**
+     * Internal method that maps according the criterias specified in all files listed inside the path
+     */
     private void searchForCriteria(MFile assetToAddress){
         for(Criteria cri : listCriteria){
          switch (cri.getTypeOfCriteria()) {
@@ -89,7 +97,6 @@ public class Search {
                  break;
          }
         }
-
     }
-
 }
+
