@@ -22,14 +22,14 @@ import java.util.List;
  */
 public class Search {
     private String path;
-    private List<Asset> myList;
-    private Criteria criteria;
-    public Search(Criteria criteria){
-        this.path = criteria.getPath();
-        this.criteria = criteria;
-        myList = new ArrayList<Asset>();
+    private List<MFile> myList;
+    private List<Criteria> listCriteria;
+    public Search(List<Criteria> listCriteria, String path){
+        this.path = path;
+        this.listCriteria = listCriteria;
+        myList = new ArrayList<MFile>();
     }
-    public List<Asset> getResult(){
+    public List<MFile> getResult() {
         searchFiles();
         return  myList;
     }
@@ -38,44 +38,58 @@ public class Search {
         File folder = new File(path);
         File[] files = folder.listFiles();
         for (File fil: files){
-            Asset assetToAddress = new Asset(fil.getAbsolutePath());
+            MFile assetToAddress = new MFile(fil.getAbsolutePath());
             if (assetToAddress.isDirectory()){
                 path = fil.getAbsolutePath();
                 searchFiles();
             }else{
-                 searchForCriteria(assetToAddress,criteria.getTypeOfCriteria(), criteria.getTextToFind());
+                searchForCriteria(assetToAddress);
             }
         }
     }
-    private void searchForCriteria(Asset assetToAddress,String typeOfCriteria,String textToFind){
-
-         switch (typeOfCriteria) {
-            case "FILENAME": if(assetToAddress.getName().equals(typeOfCriteria)) {
+    private void searchForCriteria(MFile assetToAddress){
+        for(Criteria cri : listCriteria){
+         switch (cri.getTypeOfCriteria()) {
+             case "FILENAME":
+                             if (assetToAddress.getName().contains(cri.getTextToFind())) {
                                  myList.add(assetToAddress);
-                             }break;
-            case "OWNER": if(assetToAddress.getName().contains(typeOfCriteria)) {
+                             }
+                             break;
+             case "OWNER":
+                             if (assetToAddress.getOwner().contains(cri.getTextToFind())) {
                                  myList.add(assetToAddress);
-                              }break;
-            case "CREATIONDATE": if(assetToAddress.getName().contains(typeOfCriteria)) {
-                                    myList.add(assetToAddress);
-                                    }break;
-            case "LASTMODIFYDATE": if(assetToAddress.getName().contains(typeOfCriteria)) {
-                                    myList.add(assetToAddress);
-                                    }break;
-            case "LASTACCESSDATE": if(assetToAddress.getName().contains(typeOfCriteria)) {
-                                    myList.add(assetToAddress);
-                                    }break;
-            default:break;
+                             }
+                             break;
+             case "CREATIONDATE":
+                             if (assetToAddress.getCreationDate().contains(cri.getTextToFind())) {
+                                 myList.add(assetToAddress);
+                             }
+                             break;
+             case "LASTMODIFYDATE":
+                             if (assetToAddress.getLastModifyDate().contains(cri.getTextToFind())) {
+                                 myList.add(assetToAddress);
+                             }
+                             break;
+             case "LASTACCESSDATE":
+                             if (assetToAddress.getLastModifyDate().contains(cri.getTextToFind())) {
+                                 myList.add(assetToAddress);
+                             }
+                             break;
+             case "EXTENSION":
+                             if (assetToAddress.getExtension().contains(cri.getTextToFind())) {
+                                 myList.add(assetToAddress);
+                             }
+                             break;
+             case "PATH":
+                             if (assetToAddress.getPath().contains(cri.getTextToFind())) {
+                                 myList.add(assetToAddress);
+                             }
+                             break;
+             default:
+                 break;
+         }
         }
 
-    }
-    //
-    public static void main(String arg[]){
-        Search search = new Search(new Criteria("C:\\testFolder","file","FILENAME" ) );
-        List<Asset> files = search.getResult();
-        for(Asset  fil : files) {
-            System.out.println(fil.getName());
-        }
     }
 
 }
