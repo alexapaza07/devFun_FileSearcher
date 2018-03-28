@@ -27,9 +27,10 @@ class window extends JFrame{
 // Insert the texts (Jtextfield), the button (Jbutton) and the Jpanel.
 
     JTextField textSearch;
-    JLabel searchLabel;
+    JLabel searchLabel, resultLabel;
     JButton buttonSearch;
     JPanel contentpane;
+    TextArea textResult;
 
     public window() {
 
@@ -57,9 +58,14 @@ class window extends JFrame{
 
         //Assing Label
         searchLabel = new JLabel();
+        resultLabel = new JLabel();
 
         //Assing Button
         buttonSearch = new JButton();
+
+        //Assing Result
+
+        textResult = new TextArea();
 
         //insert the texts, we give them coordinates and a text
 
@@ -73,14 +79,23 @@ class window extends JFrame{
         contentpane.add(searchLabel);
         searchLabel.setText("Search by file name");
 
+        resultLabel.setBounds(50,80, 100,25);
+        contentpane.add(resultLabel);
+        resultLabel.setText("Result");
+
 
         //insert the button, coordinates and a text
 
-        buttonSearch.setBounds(250, 150, 160, 25);
+        buttonSearch.setBounds(250, 50, 160, 25);
 
         contentpane.add(buttonSearch);
 
         buttonSearch.setText("Search");
+
+        //insert Result, coordinates and a text
+        textResult.setBounds( 50, 100, 200,200);
+        contentpane.add(textResult);
+
     }
     public static void main(String args[]){
 
