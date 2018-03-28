@@ -14,7 +14,7 @@
  *
  Class description goes here.
  *
- * @version  0.2 in progress
+ * @version  0.3 in progress
  * @author Harry Grajeda  ////
  */
 import javax.swing.*;
@@ -27,10 +27,12 @@ class window extends JFrame{
 // Insert the texts (Jtextfield), the button (Jbutton) and the Jpanel.
 
     JTextField textSearch;
-    JLabel searchLabel, resultLabel;
+    JLabel searchLabel, criteriaLabel, resultLabel;
     JButton buttonSearch;
     JPanel contentpane;
     TextArea textResult;
+    Checkbox checkBoxAdvance;
+    Choice searchCriteria;
 
     public window() {
 
@@ -59,6 +61,7 @@ class window extends JFrame{
         //Assing Label
         searchLabel = new JLabel();
         resultLabel = new JLabel();
+        criteriaLabel = new JLabel();
 
         //Assing Button
         buttonSearch = new JButton();
@@ -67,34 +70,55 @@ class window extends JFrame{
 
         textResult = new TextArea();
 
+        //Assing checkbox
+
+        checkBoxAdvance = new Checkbox();
+
+        //Assing choice
+
+        searchCriteria = new Choice();
+        searchCriteria.addItem("FILENAME");
+        searchCriteria.addItem("OWNER");
+        searchCriteria.addItem("EXTENSION");
+
         //insert the texts, we give them coordinates and a text
 
         textSearch.setBounds(250, 10, 160, 25);
-
         contentpane.add(textSearch);
-
         textSearch.setText("");
 
         searchLabel.setBounds(50,10, 150, 25);
         contentpane.add(searchLabel);
-        searchLabel.setText("Search by file name");
+        searchLabel.setText("Enter path");
 
-        resultLabel.setBounds(50,80, 100,25);
+        resultLabel.setBounds(50,120, 100,25);
         contentpane.add(resultLabel);
         resultLabel.setText("Result");
+
+        criteriaLabel.setBounds(50, 50, 100, 25);
+        contentpane.add(criteriaLabel);
+        criteriaLabel.setText("Search by:");
 
 
         //insert the button, coordinates and a text
 
-        buttonSearch.setBounds(250, 50, 160, 25);
-
+        buttonSearch.setBounds(250, 100, 160, 25);
         contentpane.add(buttonSearch);
-
         buttonSearch.setText("Search");
 
         //insert Result, coordinates and a text
-        textResult.setBounds( 50, 100, 200,200);
+        textResult.setBounds( 50, 150, 400,200);
         contentpane.add(textResult);
+
+        //insert checkbox, coordinates and a text
+
+        checkBoxAdvance.setBounds( 50, 100, 120,25);
+        contentpane.add(checkBoxAdvance);
+        checkBoxAdvance.setLabel("Advance Search");
+
+        //insert search criteria, coordinates
+        searchCriteria.setBounds(250, 50, 160,25);
+        contentpane.add(searchCriteria);
 
     }
     public static void main(String args[]){
