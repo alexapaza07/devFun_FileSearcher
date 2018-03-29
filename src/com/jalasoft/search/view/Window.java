@@ -80,6 +80,11 @@ class window extends JFrame{
         searchCriteria.addItem("FILENAME");
         searchCriteria.addItem("OWNER");
         searchCriteria.addItem("EXTENSION");
+        searchCriteria.addItem("OWNER");
+        searchCriteria.addItem("CREATION DATE");
+        searchCriteria.addItem("LAST MODIFY DATE");
+        searchCriteria.addItem("LAST ACCESS DATE");
+        searchCriteria.addItem("FILE SIZE");
 
         //insert the texts, we give them coordinates and a text
 
