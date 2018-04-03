@@ -26,7 +26,7 @@ class window extends JFrame{
 
 // Insert the texts (Jtextfield), the button (Jbutton) and the Jpanel.
 
-    JTextField textSearch;
+    JTextField textSearch, textSearchFile;
     JLabel searchLabel, criteriaLabel, resultLabel;
     JButton buttonSearch;
     JPanel contentpane;
@@ -57,6 +57,7 @@ class window extends JFrame{
         //Assing Text
 
         textSearch = new JTextField();
+        textSearchFile = new JTextField();
 
         //Assing Label
         searchLabel = new JLabel();
@@ -91,6 +92,10 @@ class window extends JFrame{
         textSearch.setBounds(250, 10, 160, 25);
         contentpane.add(textSearch);
         textSearch.setText("");
+
+        textSearchFile.setBounds(440,50, 150,25);
+        contentpane.add(textSearchFile);
+
 
         searchLabel.setBounds(50,10, 150, 25);
         contentpane.add(searchLabel);
