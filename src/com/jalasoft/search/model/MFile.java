@@ -1,5 +1,5 @@
 /*
- * Asset.java
+ * MFile.java
  *
  * Copyright (c) 2018 Jalasoft.
  *
@@ -21,7 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 /**
  *
- Implement the objects that will handle files, multimedia and folders
+ Implement the File objects that will know its properties
  *
  * @version  1.0
  * @author Alexander Apaza
@@ -55,16 +55,11 @@ public class MFile {
     /**
      * class constructor  without file URL
      */
-    public MFile(){
-    }
-    /**
-     * class constructor  without file URL
-     */
     public boolean isDirectory(){
         return  file.isDirectory();
     }
     /**
-     * set the file name from file URL
+     * set the file name from  URL file
      */
     private  void setName(){
         name = file.getName();
@@ -88,6 +83,9 @@ public class MFile {
             extension = "";
         }
     }
+    /**
+     * get the file extension
+     */
     public String getExtension(){
         return extension;
     }
@@ -105,13 +103,13 @@ public class MFile {
         }
     }
     /**
-     * get the file owner given file URL
+     * get the file owner
      */
     public  String getOwner()  {
         return owner;
     }
     /**
-     * set the creation date given file URL
+     * set the file creation date
      */
     private  void setCreationDate()  {
         try {
@@ -123,14 +121,14 @@ public class MFile {
 
     }
     /**
-     * get the creation date given file URL
+     * get the file creation date
      */
     public  String getCreationDate(){
         return  cDate;
     }
 
     /**
-     * set the last modified date given file URL
+     * set the file last modified date
      */
     private  void setLastModifyDate() {
         try {
@@ -141,7 +139,7 @@ public class MFile {
         }
     }
     /**
-     * get the last modified date given file URL
+     * get the file last modified date
      */
     public  String getLastModifyDate() {
         return mDate ;
@@ -160,10 +158,9 @@ public class MFile {
     /**
      * get the last access date given file URL
      */
-    public  String getLastAccessDate() throws IOException {
+    public  String getLastAccessDate(){
         return lastAccessDate;
     }
-    /**
-     * set the path file given file URL
-     */
+
 }
+
