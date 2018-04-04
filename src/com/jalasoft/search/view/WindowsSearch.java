@@ -15,10 +15,9 @@ package com.jalasoft.search.view;/*
  * @version  0.3 in progress
  * @author Harry Grajeda  ////
  */
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
 //create window (Jframe)
 
 public class  WindowsSearch extends JFrame{
@@ -27,7 +26,7 @@ public class  WindowsSearch extends JFrame{
 
     JTextField textPath, textSearchFile,textSearchFile2;
     JLabel searchLabel, criteriaLabel,criteriaLabel2, resultLabel;
-    JButton buttonSearch;
+    JButton buttonSearch, buttonBrowser;
     JPanel contentpane;
     JTextArea textResult;
     Checkbox checkBoxAdvance;
@@ -42,7 +41,7 @@ public class  WindowsSearch extends JFrame{
 
         //we make the window visible (Jframe) and give it coordinates where it appears
 
-        setBounds(100, 100, 640, 480);
+        setBounds(100, 100, 1024, 480);
 
         setVisible(true);
 
@@ -72,6 +71,7 @@ public class  WindowsSearch extends JFrame{
 
         //Assing Button
         buttonSearch = new JButton();
+        buttonBrowser = new JButton();
 
         //Assing Result
         textSearchFile.setBounds(440,50, 150,25);
@@ -142,10 +142,14 @@ public class  WindowsSearch extends JFrame{
         contentpane.add(buttonSearch);
         buttonSearch.setText("Search");
 
-        //insert Result, coordinates and a text
-        textResult.setBounds( 50, 150, 400,200);
-        contentpane.add(textResult);
+        buttonBrowser.setBounds(440, 10, 160, 25);
+        contentpane.add(buttonBrowser);
+        buttonBrowser.setText("Browser");
 
+
+        //insert Result, coordinates and a text
+        textResult.setBounds( 50, 150, 800,200);
+        contentpane.add(textResult);
 
 
 
@@ -180,6 +184,10 @@ public class  WindowsSearch extends JFrame{
     public String getCriteriaType2(){
         return  this.searchCriteria2.getSelectedItem().toString();
     }
+
+    public JFileChooser getButtonBrowser(){
+        return this.fileChooser;
+    }
     /*
     * Method to display files found
     */
@@ -188,6 +196,11 @@ public class  WindowsSearch extends JFrame{
         this.textResult.append(filesFound +newline);
 
     }
+
+    //Create a file chooser
+    JFileChooser fileChooser = new JFileChooser();
+    int seleccion = fileChooser.showOpenDialog(null);
+
     /*
     * Method to clean the text are result for a  new search
     */
