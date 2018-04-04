@@ -24,7 +24,9 @@ public class Search {
     private String path;
     private List<MFile> myList;
     private List<Criteria> listCriteria;
-    public Search(List<Criteria> listCriteria, String path){
+    public Search(){
+    }
+    public void init(List<Criteria> listCriteria, String path){
         this.path = path;
         this.listCriteria = listCriteria;
         myList = new ArrayList<MFile>();
@@ -48,54 +50,72 @@ public class Search {
                 path = fil.getAbsolutePath();
                 searchFiles();
             }else{
-                searchForCriteria(assetToAddress);
+                int counter = 0;
+                if(searchForCriteria(assetToAddress,listCriteria, counter)){
+                    myList.add(assetToAddress);
+                }
             }
         }
     }
     /**
-     * Internal method that maps according the criterias specified in all files listed inside the path
+     * Internal method that maps recursively  according the criterias specified in all files listed inside the path
      */
-    private void searchForCriteria(MFile assetToAddress){
-        for(Criteria cri : listCriteria){
-         switch (cri.getTypeOfCriteria()) {
-             case "FILENAME":
-                             if (assetToAddress.getName().contains(cri.getTextToFind())) {
-                                 myList.add(assetToAddress);
-                             }
-                             break;
-             case "OWNER":
-                             if (assetToAddress.getOwner().contains(cri.getTextToFind())) {
-                                 myList.add(assetToAddress);
-                             }
-                             break;
-             case "CREATIONDATE":
-                             if (assetToAddress.getCreationDate().contains(cri.getTextToFind())) {
-                                 myList.add(assetToAddress);
-                             }
-                             break;
-             case "LASTMODIFYDATE":
-                             if (assetToAddress.getLastModifyDate().contains(cri.getTextToFind())) {
-                                 myList.add(assetToAddress);
-                             }
-                             break;
-             case "LASTACCESSDATE":
-                             if (assetToAddress.getLastModifyDate().contains(cri.getTextToFind())) {
-                                 myList.add(assetToAddress);
-                             }
-                             break;
-             case "EXTENSION":
-                             if (assetToAddress.getExtension().contains(cri.getTextToFind())) {
-                                 myList.add(assetToAddress);
-                             }
-                             break;
-             case "PATH":
-                             if (assetToAddress.getPath().contains(cri.getTextToFind())) {
-                                 myList.add(assetToAddress);
-                             }
-                             break;
-             default:
-                 break;
-         }
+    public  boolean searchForCriteria(MFile fileToAddress, List<Criteria> listOfCriteria, int counter){
+        if(counter < listOfCriteria.size()) {
+            switch (listOfCriteria.get(counter).getTypeOfCriteria()) {
+                case "FILENAME":
+                    if (fileToAddress.getName().contains(listOfCriteria.get(counter).getTextToFind())) {
+                        return (true && searchForCriteria(fileToAddress, listOfCriteria, counter + 1));
+                    } else {
+                        return false;
+                    }
+
+                case "OWNER":
+                    if (fileToAddress.getName().contains(listOfCriteria.get(counter).getTextToFind())) {
+                        return (true && searchForCriteria(fileToAddress, listOfCriteria, counter + 1));
+                    } else {
+                        return false;
+                    }
+
+                case "CREATIONDATE":
+                    if (fileToAddress.getName().contains(listOfCriteria.get(counter).getTextToFind())) {
+                        return (true && searchForCriteria(fileToAddress, listOfCriteria, counter + 1));
+                    } else {
+                        return false;
+                    }
+
+                case "LASTMODIFYDATE":
+                    if (fileToAddress.getName().contains(listOfCriteria.get(counter).getTextToFind())) {
+                        return (true && searchForCriteria(fileToAddress, listOfCriteria, counter + 1));
+                    } else {
+                        return false;
+                    }
+
+                case "LASTACCESSDATE":
+                    if (fileToAddress.getName().contains(listOfCriteria.get(counter).getTextToFind())) {
+                        return (true && searchForCriteria(fileToAddress, listOfCriteria, counter + 1));
+                    } else {
+                        return false;
+                    }
+
+                case "EXTENSION":
+                    if (fileToAddress.getName().contains(listOfCriteria.get(counter).getTextToFind())) {
+                        return (true && searchForCriteria(fileToAddress, listOfCriteria, counter + 1));
+                    } else {
+                        return false;
+                    }
+
+                case "PATH":
+                    if (fileToAddress.getName().contains(listOfCriteria.get(counter).getTextToFind())) {
+                        return (true && searchForCriteria(fileToAddress, listOfCriteria, counter + 1));
+                    } else {
+                        return false;
+                    }
+                default:
+                    return true;
+            }
+        }else{
+            return true;
         }
     }
 }

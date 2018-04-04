@@ -43,9 +43,10 @@ public class Controller {
         // harcoding some values to search
         listCriteria = new ArrayList<Criteria>();
         path = new File("src\\com\\jalasoft\\search\\common\\testFolder").getAbsolutePath();
-         listCriteria.add(new Criteria("txt","FILENAME" ));
-        /*listCriteria.add(new Criteria("mp4","EXTENSION" ));
-        listCriteria.add(new Criteria("jalasoft\\search","PATH" ));
+        listCriteria.add(new Criteria("mu","FILENAME" ));
+        listCriteria.add(new Criteria("sic","FILENAME" ));
+        listCriteria.add(new Criteria("mp","EXTENSION" ));
+        /*listCriteria.add(new Criteria("jalasoft\\search","PATH" ));
         listCriteria.add(new Criteria("AA","OWNER" ));
         listCriteria.add(new Criteria("archi","FILENAME" ));*/
         isProperPath = new Validator(path).isProperPath();
@@ -56,11 +57,16 @@ public class Controller {
      */
     private   void sendCriteriaToSearchFiles(){
         if(isProperPath){
-            Search search = new Search(listCriteria,path);
+            Search search = new Search();
+            search.init(listCriteria,path);
             List<MFile> files = search.getResult();
             for(MFile fil : files) {
                 System.out.println("File found:"+fil.getName());
             }
         }
     }
+    public  static void main(String arg[]){
+        new Controller();
+    }
+
 }
