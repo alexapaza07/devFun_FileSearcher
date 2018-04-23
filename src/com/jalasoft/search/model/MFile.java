@@ -11,14 +11,7 @@
  */
 package com.jalasoft.search.model;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileOwnerAttributeView;
-import java.nio.file.attribute.UserPrincipal;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import com.jalasoft.search.common.CLogger;
 /**
  *
  Implement the File objects that will know its properties
@@ -28,6 +21,7 @@ import java.nio.file.Paths;
  */
 public class MFile extends Asset {
     private String extension;
+    private CLogger logger = CLogger.getInstance();
 
 
     /**
@@ -37,6 +31,9 @@ public class MFile extends Asset {
         super(fileUri);
         setExtension();
     }
+    /**
+     * Set itself the file extension
+     */
     private  void setExtension(){
         try {
             extension = super.getFileUri().substring(super.getFileUri().lastIndexOf(".") + 1);
@@ -48,6 +45,7 @@ public class MFile extends Asset {
      * get the file extension
      */
     public String getExtension(){
+        logger.setLogText("INFO","the extension is: "+extension);
         return extension;
     }
 

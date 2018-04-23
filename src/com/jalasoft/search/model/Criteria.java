@@ -20,11 +20,10 @@ package com.jalasoft.search.model;
 public class Criteria {
     private String textToFind;
     private String typeOfCriteria;
-    private SizeCriteria sizeCriteria;
+
     public Criteria(String textToFind,String typeOfCriteria){
         this.textToFind=textToFind;
         this.typeOfCriteria=typeOfCriteria;
-        sizeCriteria =null;
     }
     /**
      * return the text to find

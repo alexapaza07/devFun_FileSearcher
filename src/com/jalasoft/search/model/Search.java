@@ -69,10 +69,9 @@ public class Search {
      */
     public  boolean searchForCriteria(Asset fileToAddress, List<Criteria> listOfCriteria, int counter){
         if(counter < listOfCriteria.size()) {
-            System.out.println("WHAT CRITERIA IS IT?:"+listOfCriteria.get(counter).getTypeOfCriteria());
             switch (listOfCriteria.get(counter).getTypeOfCriteria()) {
 
-                case "FILENAME":
+                case "NAME":
                     if (fileToAddress.getName().contains(listOfCriteria.get(counter).getTextToFind())) {
                         return (true && searchForCriteria(fileToAddress, listOfCriteria, counter + 1));
                     } else {
@@ -88,9 +87,6 @@ public class Search {
 
                 case "CREATION DATE":
                     if (fileToAddress.getCreationDate().contains(listOfCriteria.get(counter).getTextToFind())) {
-                        System.out.println("AAAAAAAA:"+fileToAddress.getCreationDate());
-                        System.out.println("BBBBB:"+listOfCriteria.get(counter).getTextToFind());
-
 
                         return (true && searchForCriteria(fileToAddress, listOfCriteria, counter + 1));
                     } else {
@@ -129,7 +125,23 @@ public class Search {
                         return false;
                     }
                 case "SIZE":
-                    if (fileToAddress.getName().contains(listOfCriteria.get(counter).getTextToFind())) {
+                    String[] parts = listOfCriteria.get(counter).getTextToFind().split("&&");
+                    double  lowerSizeValue = Double.parseDouble(parts[0]);
+                    double upperSizeValue = Double.parseDouble(parts[1]);
+                    String unit = parts[2];
+                    double sizeOfFile = fileToAddress.getFileSize();
+                    if(unit.equals("MB")){
+                        sizeOfFile = sizeOfFile/1024.0;
+                    }if(unit.equals("GB")){
+                        sizeOfFile = ((sizeOfFile/1024.0)*1024.0);
+                    }
+                    if (sizeOfFile <= upperSizeValue && sizeOfFile>=lowerSizeValue) {
+                          return (true && searchForCriteria(fileToAddress, listOfCriteria, counter + 1));
+                    } else {
+                          return false;
+                    }
+                case "HIDDEN":
+                    if (fileToAddress.getHideFile().contains(listOfCriteria.get(counter).getTextToFind())) {
                         return (true && searchForCriteria(fileToAddress, listOfCriteria, counter + 1));
                     } else {
                         return false;

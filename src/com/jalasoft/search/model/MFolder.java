@@ -11,9 +11,15 @@
  */
 package com.jalasoft.search.model;
 
+import com.jalasoft.search.common.CLogger;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 /**
  *
  Implement the Folder objects that will know its properties
@@ -23,10 +29,14 @@ import java.net.InetAddress;
  */
 public class MFolder extends Asset {
     private  boolean isShared;
+    private CLogger logger = CLogger.getInstance();
     public  MFolder(String fileUri){
         super(fileUri);
         setIsShared();
     }
+    /**
+     * method to set if folder is shared
+     */
     private void setIsShared(){}{
         try {
             InetAddress addr;
@@ -36,24 +46,40 @@ public class MFolder extends Asset {
             if (hostname != null) {
                 File f = new File("\\\\" + hostname + "\\"+super.getName());
                 if (f.exists()) {
-                    System.out.println("The DIRECTORY IS SHARED");
                     isShared = true;
+                    logger.setLogText("INFO",f.getName()+"- is this shared? : "+isShared);
                 }
                 else {
                     isShared = false;
+                    logger.setLogText("INFO",f.getName()+"- is this shared? : "+isShared);
                 }
 
             }
         }catch (IOException io){
-            System.out.println("There has been errors" + io.getMessage());
         }
     }
-    private boolean getIsShared(){
+    /**
+     * method  to get if folder is shared
+     */
+    public boolean getIsShared(){
         return isShared;
     }
-
-
-
-
-
+    /**
+     * get the folder size
+     */
+    private long getFolderSize(File folder) {
+        long length = 0;
+        File[] files = folder.listFiles();
+        if (files == null || files.length == 0){
+            return length;
+        }
+        for (File file : files) {
+            if (file.isFile()) {
+                length += file.length();
+            } else {
+                length += getFolderSize(file);
+            }
+        }
+        return length;
+    }
 }

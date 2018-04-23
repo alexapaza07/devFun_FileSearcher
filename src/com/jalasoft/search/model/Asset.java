@@ -11,6 +11,7 @@
  */
 package com.jalasoft.search.model;
 
+import com.jalasoft.search.common.CLogger;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,7 +24,7 @@ import java.nio.file.Paths;
  *
  Implement the Asset objects that will know its properties
  *
- * @version  1.0
+ * @version  3.0
  * @author Alexander Apaza
  */
 public class Asset {
@@ -34,9 +35,11 @@ public class Asset {
     private String lastAccessDate;
     private boolean isFolder;
     private String owner;
+    private String isHidden;
     private File file;
     private Path path;
     private double fileSize;
+    private CLogger logger = CLogger.getInstance();
 
 
 
@@ -54,6 +57,7 @@ public class Asset {
         setIsFolder();
         setLastAccessDate();
         setFileSize();
+        setHideFile();
     }
     public  String getFileUri(){
         return this.fileUri;
@@ -61,9 +65,10 @@ public class Asset {
     public void setIsFolder(){
         File file = new File(fileUri);
         isFolder = file.isDirectory();
-        System.out.println( "IS FOLDER? :" +isFolder);
+        logger.setLogText("INFO",name+":Is this a folder:"+isFolder);
     }
     public boolean getIsFolder(){
+        logger.setLogText("INFO",name+":Return folder:"+isFolder);
         return isFolder;
     }
 
@@ -71,6 +76,7 @@ public class Asset {
      * class constructor  without file URL
      */
     public boolean isDirectory(){
+        logger.setLogText("INFO",name+":is this a directory? "+file.isDirectory());
         return  file.isDirectory();
     }
     /**
@@ -78,7 +84,8 @@ public class Asset {
      */
     private  void setName(){
         name = file.getName();
-        System.out.println("WHAT IS THE FILE NAME?"+name);
+        logger.setLogText("INFO",name+":file name is "+name);
+
 
     }
     /**
@@ -91,7 +98,9 @@ public class Asset {
      * get the file path
      */
     public  String  getPath()  {
+        logger.setLogText("INFO",name+":returning path :"+path.getParent().toString());
         return  path.getParent().toString();
+
     }
 
     /**
@@ -102,16 +111,17 @@ public class Asset {
             FileOwnerAttributeView view = Files.getFileAttributeView(path, FileOwnerAttributeView.class);
             UserPrincipal userPrincipal = view.getOwner();
             owner = userPrincipal.getName();
-            System.out.println( "OWNER IS? :" +owner);
+            logger.setLogText("INFO",name+":it is setting owner :"+owner);
 
         }catch (IOException ioe){
-            System.out.println( "Error:" +ioe);
+            logger.setLogText("INFO",ioe.getMessage());
         }
     }
     /**
      * get the file owner
      */
     public  String getOwner()  {
+        logger.setLogText("INFO",name+":returning owner :"+owner);
         return owner;
     }
     /**
@@ -121,9 +131,9 @@ public class Asset {
         try {
             BasicFileAttributes attr = Files.readAttributes(path, BasicFileAttributes.class);
             cDate = attr.creationTime().toString();
-            System.out.println( "WHAT IS CREATION DATE?:"+cDate);
+            logger.setLogText("INFO",name+":it has been set creation date:"+cDate);
         }catch (IOException ioe){
-            System.out.println( "Error:" +ioe);
+            logger.setLogText("INFO",ioe.getMessage());
         }
 
     }
@@ -131,6 +141,7 @@ public class Asset {
      * get the file creation date
      */
     public  String getCreationDate(){
+        logger.setLogText("INFO",name+":returning creation date :"+cDate);
         return  cDate;
     }
 
@@ -141,15 +152,16 @@ public class Asset {
         try {
             BasicFileAttributes attr = Files.readAttributes(path, BasicFileAttributes.class);
             mDate = attr.lastModifiedTime().toString();
-            System.out.println( "WHAT IS LAST MODIFY DATE? : "+mDate);
+            logger.setLogText("INFO",name+":setting last modify date:"+mDate);
         }catch (IOException ioe){
-            System.out.println( "Error:" +ioe);
+            logger.setLogText("INFO",ioe.getMessage());
         }
     }
     /**
      * get the file last modified date
      */
     public  String getLastModifyDate() {
+        logger.setLogText("INFO",name+":returning last modified date :"+mDate);
         return mDate ;
     }
     /**
@@ -159,30 +171,54 @@ public class Asset {
         try {
             BasicFileAttributes attr = Files.readAttributes(path, BasicFileAttributes.class);
             lastAccessDate = attr.lastAccessTime().toString();
-            System.out.println( "WHAT IS LAST ACCESS DATE"+lastAccessDate);
+            logger.setLogText("INFO",name+":setting last access date:"+lastAccessDate);
         }catch (IOException ioe){
-            System.out.println( "Error:" +ioe);
+            logger.setLogText("INFO",ioe.getMessage());
         }
     }
     /**
      * get the last access date given file URL
      */
     public  String getLastAccessDate(){
+        logger.setLogText("INFO",name+":returning last access date :"+lastAccessDate);
         return lastAccessDate;
     }
-
-
+    /**
+     * Set itselft the file size
+     */
     public void setFileSize(){
-       // File file =new File(fileUri);
-
         if(file.exists()){
+
             double bytes = file.length();
-            double kilobytes = (bytes / 1024);
-            System.out.println("kilobytes : " + kilobytes);
+            fileSize = (bytes / 1024);
+            logger.setLogText("INFO",name+":setting file size :"+fileSize);
         }else{
-            System.out.println("File does not exists!");
+            logger.setLogText("INFO",file.getAbsolutePath()+"file does not exist ");
         }
     }
-
+    /**
+     * get the file size
+     */
+    public double getFileSize(){
+       return fileSize;
+    }
+    /**
+     * Set itself hide file
+     */
+    public void setHideFile(){
+        if(file.isHidden()){
+            isHidden = "YES";
+            logger.setLogText("INFO",name+":is hidden:"+isHidden);
+        }else{
+            logger.setLogText("INFO",name+": is NOT hidden");
+            isHidden = "NO";
+        }
+    }
+    /**
+     * Get itself hide file
+     */
+    public String getHideFile(){
+       return isHidden;
+    }
 }
 
