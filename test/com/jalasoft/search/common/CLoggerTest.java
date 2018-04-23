@@ -1,5 +1,5 @@
 /*
- * ControllerTest.java
+ * CLoggerTest.java
  *
  * Copyright (c) 2018 Jalasoft.
  *
@@ -9,13 +9,14 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-package com.jalasoft.search.controller;
-
-import static org.junit.Assert.assertEquals;
-
+package com.jalasoft.search.common;
 /**
- * No need to implemente test class for Controller.java because it only have VOID method
- * Created by Alexander Apaza on 3/27/2018.
+ *
+ * Validate a folder, if it does not exist, or is empty
+ * @version  1.0
+ * @author Alexander Apaza
  */
-public class ControllerTest {
+public class CLoggerTest {
+    //Note. It does not need unit test
+
 }
